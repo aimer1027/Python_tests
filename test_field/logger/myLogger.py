@@ -20,7 +20,7 @@ LOG_LEVEL = {
 LOG_FILENAME	   = ''
 LOG_BACKUP_COUNTER = 3
 LOG_TYPE           = 'default'
-LOG_MAX_SIZE  = 1024*1024*32 # bits = 4MB
+LOG_MAX_SIZE  = 1024*1024*4 # bits = 0.5MB each log file
 
 
 def InitLogger(log_file_name, logger):
@@ -57,9 +57,9 @@ class log_writter(Thread):
 
 	  Thread.__init__(self,name = threadName)
 	  
-	  logger = getLogger(self.log_file_name)
+	  logger = logging.getLogger(self.log_file_name)
 	
-	  self.logger = InitLog(self.log_file_name,logger)
+	  self.logger = InitLogger(self.log_file_name,logger)
 	  
 	  
     
@@ -70,7 +70,7 @@ class log_writter(Thread):
 	  self.logger.info(self.log_file_name)
  
 	  while i in range(10):
-		print '**** log writer  test *******'
+		print '**** log writer '+self.log_file_name+' test ******'
 		
 		self.logger.info   ('hello aimer')
 		
@@ -79,16 +79,28 @@ class log_writter(Thread):
 		self.logger.warning ('hello kylin-zhang')
 	
 		i  += 1
-	
-		print i
 
-		time.sleep (5)
+		time.sleep (3)
 		
-	  self.logger.info('end of log file test')
-
+	  print('end of log file test '+ self.log_file_name )
+          
 
 
 
 i = 0
+
+threadCounter = 1024
+
+for  j in range(threadCounter):
+
+   # s is used for thread and log file no.
+   s = 'thread'
+   s +='_'+str(j) 
+   
+   print ( s )
+   
+   log_file = str(j)+'_mylog.log'
+   my_logger = log_writter( s , log_file) 
+   my_logger.start () 
 
 
