@@ -1,6 +1,11 @@
 from hashlib import sha1   # sha1() method 
 from random  import randint # randint method
 
+import logging
+
+# here we test our logger 
+from myLogger import InitLogger
+
 # here we define a method with name of get_node_id
 # it will return a sha1 data with length = 20bytes = 8*20 = 160 bits
 # it's namespace length = 20bytes = 160 bits  ,which means we could 
@@ -21,10 +26,19 @@ def get_node_id():
 
   # print hash just for test
   # print ( hash )
-  # print ( s ) 
+  # print ( s )
+  # here is the test of myLogger.py 
+   
+    log_file_name = 'node_id.log' 
     
-   #return hash's binary value 
+    mylogger = logging.getLogger(log_file_name)
+    mylogger = InitLogger(log_file_name , mylogger)    
+  
+    mylogger.info('node id :'+hash.digest())
+
+
+  # return hash's binary value 
     return hash.digest ()
 
 # test method 
-#print ( get_node_id())
+get_node_id()
